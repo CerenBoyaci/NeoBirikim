@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gelir Ekle</title>
+    <style>
+        /* Global reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            min-height: 100vh;
+        }
+
+        /* Navbar styling */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #333;
+            flex-wrap: wrap; /* Küçük ekranlar için wrap ekledim */
+        }
+
+        .navbar .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap; /* Küçük ekranlar için wrap ekledim */
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .nav-links a:hover {
+            color: #a777e3;
+        }
+
+        /* Container styling */
+        .container {
+            background-color: white;
+            padding: 40px; /* Padding'i azaltarak daha mobil uyumlu hale getirdim */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 90%; /* Genişliği %90 yaptım */
+            max-width: 600px; /* Maksimum genişliği 600px olarak ayarladım */
+            text-align: center;
+            margin: 40px auto;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        /* Buton stilleri */
+        button {
+            background-color: #6e8efb;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #a777e3;
+        }
+
+        /* Form alanları */
+        input[type="text"], input[type="number"], input[type="decimal"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+
+        /* Özel gelir alanı stilleri */
+        #custom-income-fields {
+            display: none;
+            margin-top: 20px; /* Üstteki alanlarla mesafe bıraktım */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column; /* Mobilde navbar elemanlarını alt alta yerleştir */
+                align-items: center; /* Ortaya hizala */
+            }
+
+            .nav-links {
+                flex-direction: column; /* Mobilde linkleri alt alta yap */
+                align-items: center;
+            }
+
+            .nav-links li {
+                margin-left: 0;
+                margin-bottom: 10px; /* Linkler arasında boşluk olsun */
+            }
+
+            .container {
+                padding: 20px; /* Küçük ekranlarda padding'i azalt */
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            button {
+                font-size: 14px; /* Buton fontunu küçült */
+            }
+        }
+
+        @media (max-width: 500px) {
+            .container {
+                padding: 15px; /* Daha küçük ekranlar için padding'i daha da azalt */
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+
+            button {
+                padding: 8px 16px; /* Buton padding'ini küçült */
+            }
+        }
+    </style>
+    <script>
+        // Butona tıklandığında özel gelir türü ve miktar alanlarını açan fonksiyon
+        function showCustomIncomeFields() {
+            const customFields = document.getElementById('custom-income-fields');
+            customFields.style.display = 'block';
+        }
+    </script>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <a href="#">NeoBirikim</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}">Ana Sayfa</a></li>
+            <li><a href="{% url 'about' %}">Hakkımızda</a></li>
+            <li><a href="{% url 'communication' %}">İletişim</a></li>
+            <li><a href="{% url 'update_user' %}">Kullanıcı Bilgilerini Güncelle</a></li>
+            <li><a href="{% url 'add_consumption' %}">Gider Ekle</a></li>
+            <li><a href="{% url 'add_income' %}">Gelir Ekle</a></li>
+            <li><a href="{% url 'financial_summary' %}">Finansal Özet</a></li>
+            <li><a href="{% url 'compare' %}">Finansal Öneri</a></li>
+            <li><a href="{% url 'environmental_recommendations' %}">Çevresel Öneri</a></li>
+        </ul>
+    </nav>
+
+    <!-- Ana İçerik -->
+    <div class="container">
+        <h2>Gelir Ekle</h2>
+        
+        <!-- Eğer varsa başarı veya hata mesajlarını göster -->
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li style="color: green;">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div>
+                <label for="id_income_type">Gelir Türü:</label>
+                {{ income_form.income_type }}
+            </div>
+            
+            <div>
+                <label for="id_amount">Miktar:</label>
+                {{ income_form.amount }}
+            </div>
+
+            <hr>
+            
+            <!-- Özel Gelir Türü Ekle butonu -->
+            <button type="button" onclick="showCustomIncomeFields()">Özel Gelir Türü Ekle</button>
+            
+            <!-- Özel Gelir Türü ve Miktar Alanları, başlangıçta gizli -->
+            <div id="custom-income-fields">
+                <h3>Özel Gelir Türü</h3>
+                <div>
+                    <label for="id_custom_income_type">Yeni Gelir Türü:</label>
+                    {{ custom_income_form.custom_income_type }}
+                </div>
+                
+                <div>
+                    <label for="id_custom_amount">Miktar:</label>
+                    {{ custom_income_form.custom_amount }}
+                </div>
+            </div>
+
+            <br>
+            <button type="submit">Kaydet</button>
+        </form>
+    </div>
+
+</body>
+</html>

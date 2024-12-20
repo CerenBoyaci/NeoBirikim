@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Başarıyla Kaydedildi</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 50px;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            color: #333;
+        }
+        a {
+            text-decoration: none;
+            color: #6e8efb;
+            font-weight: bold;
+        }
+        table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #6e8efb;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Giderleriniz başarıyla kaydedildi!</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Gıda ve İçecek (₺)</th>
+                <th>Enerji (₺)</th>
+                <th>Su (₺)</th>
+                <th>Giyim (₺)</th>
+                <th>Eğlence ve Dijital Tüketim (₺)</th>
+                <th>Diğer Harcamalar (₺)</th>
+                <th>Ulaşım Gideri (₺)</th>
+                <th>Tarih</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for consumption in consumptions %}
+            <tr>
+                <td>{{ consumption.food_drink }}</td>
+                <td>{{ consumption.energy }}</td>
+                <td>{{ consumption.water }}</td>
+                <td>{{ consumption.clothing }}</td>
+                <td>{{ consumption.entertainment }}</td>
+                <td>{{ consumption.other_expenses }}</td>
+                <td>{{ consumption.transportation }}</td>
+                <td>{{ consumption.created_at|date:"Y-m-d H:i:s" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="8">Henüz harcama kaydı bulunmamaktadır.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <a href="{% url 'add_consumption' %}">Yeni Gider Ekle</a>
+</body>
+</html>

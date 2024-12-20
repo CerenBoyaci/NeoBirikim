@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finansal Özet</title>
+    <style>
+        /* Global reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            min-height: 100vh;
+        }
+
+        /* Navbar styling */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #333;
+            flex-wrap: wrap;
+        }
+
+        .navbar .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .nav-links a:hover {
+            color: #a777e3;
+        }
+
+        /* Container styling */
+        .container {
+            background-color: white;
+            padding: 60px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 1200px;
+            text-align: center;
+            margin: 40px auto;
+        }
+
+        h1, h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        p {
+            margin-bottom: 20px;
+            color: #555;
+            font-size: 16px;
+        }
+
+        .incomes, .consumptions {
+            text-align: left;
+            margin: 10px 0;
+        }
+
+        .incomes li, .consumptions li {
+            margin-bottom: 5px;
+        }
+
+        /* Tavsiyeler kısmı */
+        .advice {
+            background-color: #f7f7f7;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        .advice h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .advice ul {
+            list-style-type: disc;
+            padding-left: 20px;
+            color: #555;
+        }
+
+        .advice li {
+            margin-bottom: 10px;
+        }
+
+        /* Grafik Alanı */
+        .graph-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .financial-graph {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-links li {
+                margin-left: 0;
+                margin-bottom: 10px;
+            }
+
+            .container {
+                padding: 40px;
+            }
+
+            h1, h2 {
+                font-size: 20px;
+            }
+
+            p {
+                font-size: 14px;
+            }
+
+            .graph-container {
+                padding: 20px;
+            }
+
+            .financial-graph {
+                max-width: 100%;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <a href="#">NeoBirikim</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}">Ana Sayfa</a></li>
+            <li><a href="{% url 'about' %}">Hakkımızda</a></li>
+            <li><a href="{% url 'communication' %}">İletişim</a></li>
+            <li><a href="{% url 'update_user' %}">Kullanıcı Bilgilerini Güncelle</a></li>
+            <li><a href="{% url 'add_consumption' %}">Gider Ekle</a></li>
+            <li><a href="{% url 'add_income' %}">Gelir Ekle</a></li>
+            <li><a href="{% url 'financial_summary' %}">Finansal Özet</a></li>
+            <li><a href="{% url 'compare' %}">Finansal Öneri</a></li>
+            <li><a href="{% url 'environmental_recommendations' %}">Çevresel Öneri</a></li>
+        </ul>
+    </nav>
+
+    <!-- Ana İçerik -->
+    <div class="container">
+        <h1>Finansal Özet</h1>
+        
+        <!-- Gelirler -->
+        <h2>Gelirler</h2>
+        <ul class="incomes">
+            {% for income_type, amount in income_types.items %}
+                <li>{{ income_type }}: {{ amount }} ₺</li>
+            {% endfor %}
+        </ul>
+        <p><strong>Toplam Gelir:</strong> {{ total_income }} ₺</p>
+
+        <!-- Giderler -->
+        <h2>Giderler</h2>
+        <ul class="consumptions">
+            {% for category, amount in consumption_categories.items %}
+                <li>{{ category }}: {{ amount }} ₺</li>
+            {% endfor %}
+        </ul>
+        <p><strong>Toplam Gider:</strong> {{ total_consumption }} ₺</p>
+
+        <p><strong>Mevcut Para:</strong> {{ remaining_balance }} ₺</p>
+
+        <!-- Gelir ve Gider Dağılımı Grafiği -->
+        <h2>Gelir ve Gider Dağılımı</h2>
+        <div class="graph-container">
+            <img src="data:image/png;base64,{{ graph_image }}" alt="Gelir ve Gider Dağılımı Grafiği" class="financial-graph">
+        </div>
+
+        <div class="saving-goal-link" style="margin-top: 40px;">
+            <a href="{% url 'create_saving_goal' %}" style="font-size: 18px; font-weight: bold; color: #6e8efb;">Birikim Yapmak İster Misiniz?</a>
+        </div>
+        <br>
+        <div class="saving-goal-link" style="margin-top: 40px;">
+            <a href="{% url 'saving_goal_list' %}" style="font-size: 18px; font-weight: bold; color: #6e8efb;">
+                Birikimlerinizi Görmek İster Misiniz?
+            </a>
+        </div>
+            <br> <br> <br>
+        <a href="{% url 'user_logout' %}">Çıkış Yap</a>
+    
+
+    <!-- Chart.js Kütüphanesini Dahil Etme -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Chart.js ile Dinamik Grafik
+        const ctx = document.getElementById('incomeConsumptionChart').getContext('2d');
+        const incomeConsumptionChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Gelirler', 'Giderler'],
+                datasets: [{
+                    label: 'Gelir ve Gider Dağılımı',
+                    data: [{{ total_income }}, {{ total_consumption }}],
+                    backgroundColor: ['#6e8efb', '#a777e3'],
+                    borderColor: ['#ffffff', '#ffffff'],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.label + ': ' + tooltipItem.raw + ' ₺';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

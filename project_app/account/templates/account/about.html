@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hakkımızda</title>
+    <style>
+        /* Global reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            min-height: 100vh;
+        }
+
+        /* Navbar styling */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #333;
+            flex-wrap: wrap; /* Küçük ekranlar için wrap ekledim */
+        }
+
+        .navbar .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .nav-links a:hover {
+            color: #a777e3;
+        }
+
+        /* Container styling */
+        .container {
+            background-color: white;
+            padding: 60px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 1200px;
+            text-align: center;
+            margin: 40px auto;
+            height: auto;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        p {
+            margin-bottom: 20px;
+            color: #555;
+            font-size: 16px;
+        }
+
+        /* Link styling */
+        a {
+            display: inline-block;
+            margin-top: 10px;
+            color: #6e8efb;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-links {
+                flex-direction: column; /* Mobilde linkleri alt alta yap */
+                align-items: center;
+            }
+
+            .nav-links li {
+                margin-left: 0;
+                margin-bottom: 10px; /* Linkler arasında boşluk olsun */
+            }
+
+            .container {
+                padding: 40px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            p {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .container {
+                padding: 30px;
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+
+            p {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+
+
+    <nav class="navbar">
+        <div class="logo">
+            <a href="#">NeoBirikim</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}">Ana Sayfa</a></li>
+            <li><a href="{% url 'about' %}">Hakkımızda</a></li>
+            <li><a href="{% url 'communication' %}">İletişim</a></li>
+            <li><a href="{% url 'update_user' %}">Kullanıcı Bilgilerini Güncelle</a></li>
+            <li><a href="{% url 'add_consumption' %}">Gider Ekle</a></li>
+            <li><a href="{% url 'add_income' %}">Gelir Ekle</a></li>
+            <li><a href="{% url 'financial_summary' %}">Finansal Özet</a></li>
+            <li><a href="{% url 'compare' %}">Finansal Öneri</a></li>
+            <li><a href="{% url 'environmental_recommendations' %}">Çevresel Öneri</a></li>
+        </ul>
+    </nav>
+
+<!-- Hakkımızda İçerik -->
+<div class="container">
+    <h2>Hakkımızda</h2>
+    <br>
+    <p><span class="highlight">NeoBirikim</span>, kişisel finans yönetimini daha erişilebilir ve kullanıcı dostu hale getirmeyi amaçlayan bir platformdur. Gelir ve giderlerinizi izleyerek, finansal sağlığınızı kontrol altında tutmanıza yardımcı olur. Platformumuz, tüm kullanıcıların finansal hedeflerine ulaşmalarını sağlayacak araçlarla donatılmıştır.</p>
+    <br>
+    <p>Projemizin temel amacı, kullanıcıların günlük yaşamlarındaki harcamaları ve gelirleri anlamalarına yardımcı olmaktır. Finansal farkındalık yaratmayı ve kişisel finans yönetimini daha kolay ve etkili hale getirmeyi hedefliyoruz. <span class="highlight">NeoBirikim</span>, aynı zamanda kişiselleştirilmiş öneriler ve finansal analizler ile kullanıcılara finansal kararlarını doğru bir şekilde yönlendirmeleri için rehberlik eder.</p>
+    <br>
+    <h3>Proje Amacımız</h3>
+    <p>Finansal yönetim, her birey için karmaşık ve zaman alıcı bir süreç olabilir. Biz, bu süreci basit, anlaşılır ve verimli hale getirmek için <span class="highlight">NeoBirikim</span> platformunu geliştirdik. Amaçlarımız şunlardır:</p>
+    <ul>
+        <li><strong>Gelir ve gider takibi:</strong> Kullanıcılar, her türlü gelir ve giderlerini kolayca kaydedebilir ve takip edebilirler.</li>
+        <br>
+        <li><strong>Finansal analizler:</strong> Platform, kullanıcıların harcamalarını analiz eder ve tasarruf sağlamak için kişisel öneriler sunar.</li>
+        <br>
+        <li><strong>Hedef belirleme:</strong> Kullanıcılar, finansal hedefler belirleyebilir ve bu hedeflere ulaşmak için adımlar atabilirler.</li>
+        <br>
+        <li><strong>Finansal eğitim:</strong> Kullanıcıları finansal okuryazarlık konusunda bilgilendirmeyi ve eğitmeyi amaçlıyoruz.</li>
+    </ul>
+    <br>
+    <p><span class="highlight">NeoBirikim</span>, finansal sağlığınızı iyileştirmeniz için gereken tüm araçları size sunuyor. Amacımız, herkesin kendi mali durumunu yönetebilir hale gelmesini sağlamak ve kullanıcılarımızın finansal özgürlüklerini kazanmalarına yardımcı olmaktır.</p>
+
+    <a href="{% url 'home' %}">Ana Sayfaya Dön</a>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kullanıcı Bilgilerini Güncelle</title>
+    <style>
+        /* Global reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            min-height: 100vh;
+        }
+
+        /* Navbar styling */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #333;
+            flex-wrap: wrap; /* Küçük ekranlar için wrap ekledim */
+        }
+
+        .navbar .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .nav-links a:hover {
+            color: #a777e3;
+        }
+
+        /* Container styling */
+        .container {
+            background-color: white;
+            padding: 60px; /* Padding'i 60px olarak ayarladım */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 1200px;
+            text-align: center;
+            margin: 40px auto;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        /* Form styling */
+        form {
+            margin-bottom: 20px; /* Form ile mesajlar arasında boşluk */
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+            text-align: left; /* Metin hizalamasını sola aldım */
+        }
+
+        label {
+            margin-bottom: 5px; /* Label ile input arasında boşluk */
+            font-weight: bold; /* Label metni kalın */
+        }
+
+        input[type="text"], input[type="password"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .error-message {
+            color: red; /* Hata mesajı kırmızı */
+            font-size: 14px; /* Hata mesajı yazı boyutu */
+        }
+
+        button {
+            padding: 10px;
+            background-color: #6e8efb;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #5a76db; /* Hover efekti için renk değişimi */
+        }
+
+        /* Link styling */
+        a {
+            display: inline-block;
+            margin-top: 10px;
+            color: #6e8efb;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-links {
+                flex-direction: column; /* Mobilde linkleri alt alta yap */
+                align-items: center;
+            }
+
+            .nav-links li {
+                margin-left: 0;
+                margin-bottom: 10px; /* Linkler arasında boşluk olsun */
+            }
+
+            .container {
+                padding: 40px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .container {
+                padding: 30px;
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <a href="#">NeoBirikim</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}">Ana Sayfa</a></li>
+            <li><a href="{% url 'about' %}">Hakkımızda</a></li>
+            <li><a href="{% url 'communication' %}">İletişim</a></li>
+            <li><a href="{% url 'update_user' %}">Kullanıcı Bilgilerini Güncelle</a></li>
+            <li><a href="{% url 'add_consumption' %}">Gider Ekle</a></li>
+            <li><a href="{% url 'add_income' %}">Gelir Ekle</a></li>
+            <li><a href="{% url 'financial_summary' %}">Finansal Özet</a></li>
+            <li><a href="{% url 'compare' %}">Finansal Öneri</a></li>
+            <li><a href="{% url 'environmental_recommendations' %}">Çevresel Öneri</a></li>
+        </ul>
+    </nav>
+
+    <!-- Kullanıcı Bilgilerini Güncelleme İçerik -->
+    <div class="container">
+        <h2>Kullanıcı Bilgilerini Güncelle</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Kullanıcı Adı:</label>
+                {{ form.username }}
+                <span class="error-message">{{ form.username.errors }}</span> <!-- Hata mesajı -->
+            </div>
+            <div class="form-group">
+                <label for="current_password">Mevcut Şifre:</label>
+                {{ form.current_password }}
+                <span class="error-message">{{ form.current_password.errors }}</span> <!-- Hata mesajı -->
+            </div>
+            <div class="form-group">
+                <label for="new_password1">Yeni Şifre:</label>
+                {{ form.new_password1 }}
+                <span class="error-message">{{ form.new_password1.errors }}</span> <!-- Hata mesajı -->
+            </div>
+            <div class="form-group">
+                <label for="new_password2">Yeni Şifre (Tekrar):</label>
+                {{ form.new_password2 }}
+                <span class="error-message">{{ form.new_password2.errors }}</span> <!-- Hata mesajı -->
+            </div>
+            <button type="submit">Güncelle</button>
+        </form>
+        <a href="{% url 'home' %}">Geri Dön</a>
+    </div>
+
+</body>
+</html>

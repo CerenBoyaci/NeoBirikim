@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hedeflerim</title>
+    <style>
+        /* Global reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            min-height: 100vh;
+        }
+
+        /* Navbar styling */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #333;
+            flex-wrap: wrap;
+        }
+
+        .navbar .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .nav-links a:hover {
+            color: #a777e3;
+        }
+
+        /* Container styling */
+        .container {
+            background-color: white;
+            padding: 60px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 1200px;
+            text-align: center;
+            margin: 40px auto;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        p {
+            margin-bottom: 20px;
+            color: #555;
+            font-size: 18px;
+        }
+
+        /* Hedeflerim listesi */
+        .goal-list {
+            list-style: none;
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .goal-list li {
+            background-color: #f9f9f9;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+            animation: slideIn 0.8s ease-in-out;
+        }
+
+        .goal-list strong {
+            color: #333;
+        }
+
+        .goal-list a {
+            text-decoration: none;
+            color: #6e8efb;
+            font-weight: bold;
+        }
+
+        .goal-list a:hover {
+            color: #a777e3;
+        }
+
+        /* İlerleme Çubuğu */
+        .progress-container {
+            width: 100%;
+            height: 20px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            margin-top: 15px;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: #6e8efb;
+            border-radius: 10px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive styling */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-links li {
+                margin-left: 0;
+                margin-bottom: 10px;
+            }
+
+            .container {
+                padding: 40px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            p {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <a href="#">NeoBirikim</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}">Ana Sayfa</a></li>
+            <li><a href="{% url 'about' %}">Hakkımızda</a></li>
+            <li><a href="{% url 'communication' %}">İletişim</a></li>
+            <li><a href="{% url 'update_user' %}">Kullanıcı Bilgilerini Güncelle</a></li>
+            <li><a href="{% url 'add_consumption' %}">Gider Ekle</a></li>
+            <li><a href="{% url 'add_income' %}">Gelir Ekle</a></li>
+            <li><a href="{% url 'financial_summary' %}">Finansal Özet</a></li>
+            <li><a href="{% url 'compare' %}">Finansal Öneri</a></li>
+            <li><a href="{% url 'environmental_recommendations' %}">Çevresel Öneri</a></li>
+        </ul>
+    </nav>
+
+    <!-- Ana İçerik -->
+    <div class="container">
+        <h1>Hedeflerim</h1>
+        <p><strong>Toplam Birikim:</strong> {{ total_savings_all_goals }} TL</p>
+        <ul class="goal-list">
+            {% for item in goal_data %}
+            <li>
+                <strong>Hedef Tutarı:</strong> {{ item.goal.goal_amount }} TL <br>
+                <strong>Birikim:</strong> {{ item.total_savings }} TL <br>
+                <strong>Kalan:</strong> {{ item.remaining }} TL <br>
+                <strong>Kalan Gelir:</strong> {{ item.remaining_income }} TL <br>
+
+                <strong>Hedef Kayıt Tarihi:</strong> {{ item.goal_created_at|date:"d-m-Y H:i" }} <br>
+
+                <strong>Birikim Eklenme Tarihleri:</strong> <br>
+                {% for saving in item.savings_data %}
+                    {{ saving.created_at|date:"d-m-Y H:i" }} <br>
+                {% endfor %}
+                
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: {{ item.progress }}%;"></div>
+                </div>
+        
+                <a href="{% url 'add_saving' item.goal.id %}">Birikim Ekle</a>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <a href="{% url 'create_saving_goal' %}" class="btn">Yeni Hedef Oluştur</a>
+    </div>
+
+</body>
+</html>

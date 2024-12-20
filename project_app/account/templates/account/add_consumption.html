@@ -1,0 +1,204 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gider Ekle</title>
+    <style>
+        /* Global reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            min-height: 100vh;
+        }
+
+        /* Navbar styling */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #333;
+            flex-wrap: wrap; /* Küçük ekranlar için wrap ekledim */
+        }
+
+        .navbar .logo {
+            color: white; /* Logo rengi beyaz olarak ayarlandı */
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .nav-links a:hover {
+            color: #a777e3;
+        }
+
+        /* Container styling */
+        .container {
+            background-color: white;
+            padding: 60px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 1200px;
+            text-align: center;
+            margin: 40px auto;
+            height: auto;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #6e8efb;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #5a76d0;
+        }
+
+        /* Resim stili */
+        .image-container {
+            margin-bottom: 30px;
+        }
+
+        .image-container img {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-links {
+                flex-direction: column; /* Mobilde linkleri alt alta yap */
+                align-items: center;
+            }
+
+            .nav-links li {
+                margin-left: 0;
+                margin-bottom: 10px; /* Linkler arasında boşluk olsun */
+            }
+
+            .container {
+                padding: 40px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .container {
+                padding: 30px;
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <a href="#">NeoBirikim</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}">Ana Sayfa</a></li>
+            <li><a href="{% url 'about' %}">Hakkımızda</a></li>
+            <li><a href="{% url 'communication' %}">İletişim</a></li>
+            <li><a href="{% url 'update_user' %}">Kullanıcı Bilgilerini Güncelle</a></li>
+            <li><a href="{% url 'add_consumption' %}">Gider Ekle</a></li>
+            <li><a href="{% url 'add_income' %}">Gelir Ekle</a></li>
+            <li><a href="{% url 'financial_summary' %}">Finansal Özet</a></li>
+            <li><a href="{% url 'compare' %}">Finansal Öneri</a></li>
+            <li><a href="{% url 'environmental_recommendations' %}">Çevresel Öneri</a></li>
+        </ul>
+    </nav>
+
+    <!-- Gider Ekle İçerik -->
+    <div class="container">
+       
+
+        <h2>Giderlerinizi Girin</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <label for="id_food_drink">Gıda ve İçecek (₺):</label>
+            {{ form.food_drink }}
+            <label for="id_energy">Enerji (₺):</label>
+            {{ form.energy }}
+            <label for="id_water">Su (₺):</label>
+            {{ form.water }}
+            <label for="id_clothing">Giyim (₺):</label>
+            {{ form.clothing }}
+            <label for="id_entertainment">Eğlence ve Dijital Tüketim (₺):</label>
+            {{ form.entertainment }}
+            <label for="id_other_expenses">Diğer Harcamalar (₺):</label>
+            {{ form.other_expenses }}
+            <label for="id_transportation">Ulaşım Gideri (₺):</label>  <!-- Ulaşım gideri etiketi eklendi -->
+            {{ form.transportation }}  <!-- Ulaşım gideri alanı eklendi -->
+            <button type="submit">Kaydet</button>
+        </form>
+    </div>
+
+</body>
+</html>

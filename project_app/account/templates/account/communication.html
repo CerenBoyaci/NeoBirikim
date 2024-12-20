@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İletişim</title>
+    <style>
+        /* Global reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Navbar styling */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #333;
+            flex-wrap: wrap;
+        }
+
+        .navbar .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .nav-links a:hover {
+            color: #a777e3;
+        }
+
+        /* Container styling */
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 1000px;
+            margin: 40px auto;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: bold;
+            font-size: 28px;
+        }
+
+        h3 {
+            margin-top: 20px;
+            font-size: 22px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        p {
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #555;
+        }
+
+        /* Form styling */
+        form {
+            margin-top: 20px;
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        label {
+            font-size: 14px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #6e8efb;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-links li {
+                margin-left: 0;
+                margin-bottom: 10px;
+            }
+
+            .container {
+                padding: 30px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            p {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <a href="#">NeoBirikim</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}">Ana Sayfa</a></li>
+            <li><a href="{% url 'about' %}">Hakkımızda</a></li>
+            <li><a href="{% url 'communication' %}">İletişim</a></li>
+            <li><a href="{% url 'update_user' %}">Kullanıcı Bilgilerini Güncelle</a></li>
+            <li><a href="{% url 'add_consumption' %}">Gider Ekle</a></li>
+            <li><a href="{% url 'add_income' %}">Gelir Ekle</a></li>
+            <li><a href="{% url 'financial_summary' %}">Finansal Özet</a></li>
+            <li><a href="{% url 'compare' %}">Finansal Öneri</a></li>
+            <li><a href="{% url 'environmental_recommendations' %}">Çevresel Öneri</a></li>
+        </ul>
+    </nav>
+
+    <!-- İletişim İçerik -->
+    <div class="container">
+        <h2>İletişim</h2>
+        <p>Bizimle iletişime geçmek için aşağıdaki formu doldurabilir ya da doğrudan iletişim bilgileri ile bize ulaşabilirsiniz.</p>
+
+        <!-- İletişim Formu -->
+        <form action="#" method="POST">
+            <label for="name">Adınız Soyadınız:</label>
+            <input type="text" id="name" name="name" placeholder="Adınızı ve soyadınızı girin" required><br>
+
+            <label for="email">E-posta Adresiniz:</label>
+            <input type="email" id="email" name="email" placeholder="E-posta adresinizi girin" required><br>
+
+            <label for="message">Mesajınız:</label>
+            <textarea id="message" name="message" rows="4" placeholder="Mesajınızı buraya yazın" required></textarea><br>
+
+            <button type="submit">Gönder</button>
+        </form>
+        <br>
+        <br>
+        <hr>
+
+        <!-- İletişim Bilgileri -->
+        <h3>İletişim Bilgilerimiz</h3>
+        <p><strong>Adres:</strong> NeoBirikim Merkez Ofisi, Denizli, Türkiye</p>
+        <p><strong>Telefon:</strong> +90 123 456 7890</p>
+        <p><strong>E-posta:</strong> iletisim@neobirikim.com</p>
+
+        <p>Geri bildirimleriniz bizim için çok önemli! Her türlü soru, öneri ve görüşlerinizi bize iletmekten çekinmeyin.</p>
+    </div>
+
+</body>
+</html>
